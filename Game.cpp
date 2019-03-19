@@ -42,58 +42,63 @@ void Game::initialize(bool points[]) {
 
 void Game::doOneStepInGame() {
     int indexTableX;
-    int indexTableY;
-    for(int i=0;i<row;i++){
-        for(int j=0;j<column;j++){
-            int howManyNeighbours=0;
-            int x,y;
+
+        for(int i=0;i<row;i++){
+            for(int j=0;j<column;j++){
+                int howManyNeighbours=0;
+                int x,y;
 
 
-            // oblicza liczbę sąsiadów komórki [x,y]
-            for(x = -1; x < 2; x++)
-                for(y = -1; y < 2; y++)
-                {
-                    indexTableX = i + x;
-                    if(indexTableX<0 || indexTableX>=row ){
+                // oblicza liczbę sąsiadów komórki [x,y]
+                for(x = -1; x < 2; x++)
+                    for(y = -1; y < 2; y++)
+                    {
+                        indexTableX = i + x;
+                        if(indexTableX<0 || indexTableX>=row ){
 
-                    }else {
-                        if(((x != 0) || (y != 0)) &&(board.get()[Y(j + y)+row*(i + x)]==true) ){
-                            howManyNeighbours++;
+                        }else {
+                            if(((x != 0) || (y != 0)) &&(board.get()[Y(j + y)+row*(i + x)]==true) ){
+                                howManyNeighbours++;
+                            }
                         }
+                    }
+
+                // sprawdza reguły przeżycia komórki lub narodzin nowej
+                if(board.get()[i*row+j] == true)    // gdy komórka żywa
+                {
+                    if ((howManyNeighbours == 2) || (howManyNeighbours == 3)) {
+                        tmpBoard.get()[i*row+j] = true;
+                    } else {
+                        tmpBoard.get()[i*row+j] = false;
+                    }
+                }
+                else  // gdy komórka martwa
+                {
+                    if(howManyNeighbours == 3) {
+                        tmpBoard.get()[i*row+j] = true;
+                    }
+                    else {
+                        tmpBoard.get()[i*row+j] = false;
                     }
                 }
 
-            // sprawdza reguły przeżycia komórki lub narodzin nowej
-            if(board.get()[i*row+j] == true)    // gdy komórka żywa
-            {
-                if ((howManyNeighbours == 2) || (howManyNeighbours == 3)) {
-                    tmpBoard.get()[i*row+j] = true;
-                } else {
-                    tmpBoard.get()[i*row+j] = false;
-                }
             }
-            else  // gdy komórka martwa
-            {
-                if(howManyNeighbours == 3) {
-                    tmpBoard.get()[i*row+j] = true;
-                }
-                else {
-                    tmpBoard.get()[i*row+j] = false;
-                }
+        }
+
+        // przenosimy *buf do *map
+        cout<<"Przed"<<endl;
+        show();
+        for(int i = 0; i < row; i++){
+            for(int j=0;j<column;j++){
+                board.get()[X(1+i)*row+Y(1+j)]= tmpBoard.get()[i*row+j];
             }
-
         }
-    }
-
-    // przenosimy *buf do *map
-    for(int i = 0; i < row; i++){
-        for(int j=0;j<column;j++){
-            board.get()[i*row+j]= tmpBoard.get()[i*row+j];
-        }
+        cout<<"-----------------------------"<<endl;
+        show();
     }
 
 
-}
+
 
 // wylicza współrzędną x w obrębie pola gry
 int Game::X(int x)
