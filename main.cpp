@@ -11,8 +11,8 @@
 
 struct BadBoard{
 public:
-    void displayStatement(string comunicat){
-        cout<<comunicat<<endl;
+    void displayStatement(string statement){
+        cout<<statement<<endl;
     }
 };
 
@@ -53,7 +53,6 @@ int main() {
         for(int j=0;j<column;j++){
             pointsToInit[i*row+j]=false;
         }
-        cout<<endl;
     }
 
     int indexX,indexY;
@@ -128,10 +127,10 @@ queue<int> putDataYourself(int row,int column){
             try {
                 cout << "Give coordinate X" << endl;
                 cin >> tmpPointX;
-
                 cout << "Give coordinate Y" << endl;
                 cin >> tmpPointY;
                 riskFunction(tmpPointX,tmpPointY,row,column);
+
                 startingData.push(tmpPointX);
                 startingData.push(tmpPointY);
             }catch(BadBoard error){

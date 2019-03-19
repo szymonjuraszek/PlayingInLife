@@ -8,14 +8,14 @@
 using namespace std;
 
 Game::Game() : column(10), row(10) {
-    cout<<"Stworzylem plansze o rozmiarze: "<<row<<"x"<<column<<endl;
+    cout<<"I have created board : "<<row<<"x"<<column<<endl;
     board = make_unique<bool[]>(row*column);
     tmpBoard = make_unique<bool[]>(row*column);
 
 }
 
 Game::Game(int row,int column) : column(column), row(row) {
-    cout<<"Stworzylem plansze o rozmiarze: "<<row<<"x"<<column<<endl;
+    cout<<"I have created board : "<<row<<"x"<<column<<endl;
     board = make_unique<bool[]>(row*column);
     tmpBoard = make_unique<bool[]>(row*column);
 }
@@ -54,11 +54,10 @@ void Game::doOneStepInGame() {
                 for(y = -1; y < 2; y++)
                 {
                     indexTableX = i + x;
-                    indexTableY = j + y;
-                    if(indexTableX<0 || indexTableX>=row || indexTableY<0 || indexTableY>=column){
+                    if(indexTableX<0 || indexTableX>=row ){
 
                     }else {
-                        if(((x != 0) || (y != 0)) &&(board.get()[(j + y)+row*(i + x)]==true) ){
+                        if(((x != 0) || (y != 0)) &&(board.get()[Y(j + y)+row*(i + x)]==true) ){
                             howManyNeighbours++;
                         }
                     }
