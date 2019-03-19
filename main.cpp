@@ -9,7 +9,7 @@
 
 struct BadBoard{
 public:
-    void displayComunicat(string comunicat){
+    void displayComunicate(string comunicat){
         cout<<comunicat<<endl;
     }
 };
@@ -60,15 +60,14 @@ int main() {
                 riskFunction(tmpPointX,tmpPointY,row,column);
                 pointsToInit[(tmpPointX-1)*row + (tmpPointY-1)]=true;
             }catch(BadBoard error){
-                error.displayComunicat("Podano liczbe z poza przedialu");
+                error.displayComunicate("Podano liczbe z poza przedialu");
             }
 
         }
     }else{
         int numberOfPoints=(row*column)/6;
-    for(int i=0; i < numberOfPoints; i++){
+        for(int i=0; i < numberOfPoints; i++){
             int positionPoint =( rand() % (row*column) ) + 0;
-            cout<<"position: "<<positionPoint<<endl;
             pointsToInit[positionPoint] = true;
         }
     }
