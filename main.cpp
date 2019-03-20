@@ -51,9 +51,12 @@ int main() {
     bool pointsToInit[row*column];
     for(int i=0;i<row;i++){
         for(int j=0;j<column;j++){
-            pointsToInit[i*row+j]=false;
+            pointsToInit[i*column+j]=false;
+
         }
+
     }
+
 
     int indexX,indexY;
     int n = startingData.size();
@@ -62,14 +65,16 @@ int main() {
         startingData.pop();
         indexY=startingData.front();
         startingData.pop();
-        pointsToInit[(indexX-1)*row + (indexY-1)]=true;
+        pointsToInit[(indexX-1)*column + (indexY-1)]=true;
     }
+
+
 
     gameOfLife.get()->initialize(pointsToInit);
     gameOfLife.get()->show();
 
     cout<<"Starting Game"<<endl;
-    for(int i=0;i<10;i++){
+    for(int i=0;i<20;i++){
         gameOfLife.get()->doOneStepInGame();
         cout<<"------------------------------------------------------------------------------"<<endl;
         gameOfLife.get()->show();

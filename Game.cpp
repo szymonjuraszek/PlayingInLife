@@ -23,7 +23,7 @@ Game::Game(int row,int column) : column(column), row(row) {
 void Game::show() {
     for(int i=0;i<row;i++){
         for(int j=0;j<column;j++){
-            cout<<board[i*row+j]<<" ";
+            cout<<board[i*column+j]<<" ";
         }
         cout<<endl;
     }
@@ -32,8 +32,8 @@ void Game::show() {
 void Game::initialize(bool points[]) {
     for(int i=0;i<row;i++){
         for(int j=0;j<column;j++){
-            if(points[i*row+j]==true) {
-                board[i * row + j] = true;
+            if(points[i*column+j]==true) {
+                board[i * column + j] = true;
             }
         }
 
@@ -57,28 +57,28 @@ void Game::doOneStepInGame() {
                         if(indexTableX<0 || indexTableX>=row ){
 
                         }else {
-                            if(((x != 0) || (y != 0)) &&(board.get()[Y(j + y)+row*(i + x)]==true) ){
+                            if(((x != 0) || (y != 0)) &&(board.get()[Y(j + y)+column*(i + x)]==true) ){
                                 howManyNeighbours++;
                             }
                         }
                     }
 
                 // sprawdza reguły przeżycia komórki lub narodzin nowej
-                if(board.get()[i*row+j] == true)    // gdy komórka żywa
+                if(board.get()[i*column+j] == true)    // gdy komórka żywa
                 {
                     if ((howManyNeighbours == 2) || (howManyNeighbours == 3)) {
-                        tmpBoard.get()[i*row+j] = true;
+                        tmpBoard.get()[i*column+j] = true;
                     } else {
-                        tmpBoard.get()[i*row+j] = false;
+                        tmpBoard.get()[i*column+j] = false;
                     }
                 }
                 else  // gdy komórka martwa
                 {
                     if(howManyNeighbours == 3) {
-                        tmpBoard.get()[i*row+j] = true;
+                        tmpBoard.get()[i*column+j] = true;
                     }
                     else {
-                        tmpBoard.get()[i*row+j] = false;
+                        tmpBoard.get()[i*column+j] = false;
                     }
                 }
 
@@ -86,15 +86,13 @@ void Game::doOneStepInGame() {
         }
 
         // przenosimy *buf do *map
-        cout<<"Przed"<<endl;
-        show();
         for(int i = 0; i < row; i++){
             for(int j=0;j<column;j++){
-                board.get()[X(1+i)*row+Y(1+j)]= tmpBoard.get()[i*row+j];
+                board.get()[i*column+j]= tmpBoard.get()[i*column+j];
             }
         }
-        cout<<"-----------------------------"<<endl;
-        show();
+
+
     }
 
 
